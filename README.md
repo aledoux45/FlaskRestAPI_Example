@@ -8,17 +8,18 @@ We use the public Iris dataset.
 The model is a Logistic Regression model.
 
 ## Usage
-Train your model in train.py 
+Train your model in train.py  
 Deploy it to the API.
 
 ## API
-Once the API is up and running, you can request your model preidction via:
+Once the API is up and running, you can request your model predictions via:
 `http://localhost:5000/model/sepal_length=5.0&sepal_width=2.9&petal_length=1.5&petal_width=0.2`
 
-or 
+or from Python:
 
 ```
 import requests  
+
 url = http://localhost:5000/model/  
 params = {sepal_length:5.0,  
           sepal_width:2.9,  
