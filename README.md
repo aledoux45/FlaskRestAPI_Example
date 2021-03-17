@@ -20,12 +20,12 @@ or from Python:
 ```
 import requests  
 
-url = http://localhost:5000/model/  
-params = {sepal_length:5.0,  
-          sepal_width:2.9,  
-          petal_length:1.5,  
-          petal_width:0.2  
-r = requests.get(url = url, params = params)  
-data = r.json()  
+url = "http://localhost:5000/model"  
+params = {'sepal_length':'5.0',  
+          'sepal_width':'2.9',  
+          'petal_length':'1.5',  
+          'petal_width':'0.2'}  
+r = requests.get(url=url, params=params)  
+data = r.json()  ## data = {'prediction': 'Setosa'}
 pred = data['prediction']  
 ```

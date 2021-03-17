@@ -1,9 +1,10 @@
-from flask import Flask, jsonify
-from flask_restful import Resource, Api 
-import pickle
-import configparser
-import numpy as np
+from flask import Flask, jsonify, request
+from flask_restful import Resource, Api, reqparse
 
+import configparser
+import pickle
+import numpy as np
+from urllib import parse
 
 app = Flask(__name__) 
 api = Api(app) 
@@ -19,32 +20,28 @@ model = pickle.load(open(config['model_path'],'rb'))
 sc = pickle.load(open(config['scaler_path'],'rb'))
 
 
-def parse_params(params):
-    dict_params = {}
-    for p in params.split('&'):
-        u = p.split("=")
-        if len(u) != 2:
-            raise ValueError("URL parameters not in proper format")
-        dict_params[u[0]] = u[1]
-    return dict_params
-
-
 class ModelPrediction(Resource): 
-    # Implements a get and post requests
-    def get(self, params): 
+    def get(self): 
         # parse parameters passed in url
-        dict_params = parse_params(params)
-        X = np.array([[dict_params['sepal_length'], dict_params['sepal_width'], dict_params['petal_length'], dict_params['petal_width']]])
+        parser = reqparse.RequestParser()
+        parser.add_argument('sepal_length', type=float)
+        parser.add_argument('sepal_width', type=float)
+        parser.add_argument('petal_length', type=float)
+        parser.add_argument('petal_width', type=float)
+        params = parser.parse_args(strict=True)
+
+        # Create vector and compute model prediction
+        X = np.array([[params['sepal_length'], params['sepal_width'], params['petal_length'], params['petal_width']]])
         X = sc.transform(X)
         pred = model.predict(X)
         return jsonify({'prediction': pred[0]}) 
 
 # adding the defined resources along with their corresponding urls 
-api.add_resource(ModelPrediction, '/model/<string:params>') 
+api.add_resource(ModelPrediction, '/model') 
 
 
 if __name__ == '__main__':
     app.run(debug = config['debug'])
 
     # Once the API is up and running, you can request your model preidction via
-    # http://localhost:5000/model/sepal_length=5.0&sepal_width=2.9&petal_length=1.5&petal_width=0.2
+    # http://localhost:5000/model?sepal_length=5.0&sepal_width=2.9&petal_length=1.5&petal_width=0.2
