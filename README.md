@@ -13,7 +13,7 @@ Deploy it to the API.
 
 ## API
 Once the API is up and running, you can request your model predictions via:
-`http://localhost:5000/model/sepal_length=5.0&sepal_width=2.9&petal_length=1.5&petal_width=0.2`
+`http://localhost:5000/model?sepal_length=5.0&sepal_width=2.9&petal_length=1.5&petal_width=0.2`
 
 or from Python:
 
