@@ -30,5 +30,5 @@ data = r.json()  ## data = {'prediction': 'Setosa'}
 pred = data['prediction']  
 ```
 
-## Visualization of the codebase]
+## Visualization of the codebase
 ![Visualization of the codebase](./diagram.svg)
