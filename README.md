@@ -17,7 +17,7 @@ Once the API is up and running, you can request your model predictions via:
 
 or from Python:
 
-```
+```python
 import requests  
 
 url = "http://localhost:5000/model"  
