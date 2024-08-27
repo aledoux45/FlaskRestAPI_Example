@@ -4,13 +4,12 @@ from flask_restful import Resource, Api, reqparse
 import configparser
 import pickle
 import numpy as np
-from urllib import parse
 
 app = Flask(__name__) 
 api = Api(app) 
 
 # load configuration
-env = 'DEV' #PROD
+env = 'DEV' # PROD
 config = configparser.ConfigParser()
 config.read('config.ini')
 config = config[env]
